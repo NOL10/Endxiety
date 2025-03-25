@@ -89,11 +89,11 @@ export default function ChatPage() {
         recognitionRef.current.interimResults = true;
         recognitionRef.current.lang = 'en-US';
         
-        recognitionRef.current.onresult = (event) => {
+        recognitionRef.current.onresult = (event: SpeechRecognitionEvent) => {
           try {
             const transcript = Array.from(event.results)
               .map(result => result[0])
-              .map(result => result.transcript)
+              .map(result => result.transcript as string)
               .join('');
             
             setMessage(transcript);
@@ -102,7 +102,7 @@ export default function ChatPage() {
           }
         };
         
-        recognitionRef.current.onerror = (event) => {
+        recognitionRef.current.onerror = (event: SpeechRecognitionErrorEvent) => {
           console.error('Speech recognition error', event.error);
           setIsRecording(false);
           

@@ -15,18 +15,19 @@ export async function analyzeEmotion(text: string): Promise<{
       model: "gpt-4o",
       messages: [
         {
-          role: "system",
+          role: "system" as const,
           content: "You are an emotional intelligence expert. Analyze the text and identify the primary emotion, its intensity (1-10), and overall sentiment (positive, negative, or neutral). Respond with JSON in this format: { 'emotion': string, 'intensity': number, 'sentiment': 'positive' | 'negative' | 'neutral' }"
         },
         {
-          role: "user",
+          role: "user" as const,
           content: text
         }
       ],
       response_format: { type: "json_object" }
     });
 
-    return JSON.parse(response.choices[0].message.content);
+    const content = response.choices[0].message.content || '{"emotion":"unknown","intensity":5,"sentiment":"neutral"}';
+    return JSON.parse(content);
   } catch (error) {
     console.error("Error analyzing emotion:", error);
     return {
@@ -160,7 +161,8 @@ export async function generateWellbeingTips(moodHistory: Array<{ mood: string, c
       response_format: { type: "json_object" }
     });
 
-    return JSON.parse(response.choices[0].message.content);
+    const content = response.choices[0].message.content || '{"insights":[],"tips":[]}';
+    return JSON.parse(content);
   } catch (error) {
     console.error("Error generating wellbeing tips:", error);
     // Fallback response
