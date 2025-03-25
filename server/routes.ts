@@ -62,6 +62,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Get user's mood history
   app.get("/api/moods", requireAuth, async (req, res, next) => {
     try {
+      if (!req.user) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+      
       const moods = await storage.getMoodsByUserId(req.user.id);
       res.json(moods);
     } catch (error) {
@@ -72,6 +76,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Create new post
   app.post("/api/posts", requireAuth, async (req, res, next) => {
     try {
+      if (!req.user) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+      
       const validatedData = insertPostSchema.parse({
         ...req.body,
         userId: req.user.id
@@ -135,6 +143,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Create reaction to a post
   app.post("/api/posts/:postId/reactions", requireAuth, async (req, res, next) => {
     try {
+      if (!req.user) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+      
       const { postId } = req.params;
       
       const post = await storage.getPostById(Number(postId));
@@ -161,6 +173,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Create comment on a post
   app.post("/api/posts/:postId/comments", requireAuth, async (req, res, next) => {
     try {
+      if (!req.user) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+      
       const { postId } = req.params;
       
       const post = await storage.getPostById(Number(postId));
@@ -209,6 +225,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Chat endpoints
   app.post("/api/chat", requireAuth, async (req, res, next) => {
     try {
+      if (!req.user) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+      
       const { message } = req.body;
       if (!message) {
         return res.status(400).json({ message: "Message is required" });
@@ -249,6 +269,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Get chat history
   app.get("/api/chat", requireAuth, async (req, res, next) => {
     try {
+      if (!req.user) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+      
       const messages = await storage.getChatMessagesByUserId(req.user.id);
       res.json(messages);
     } catch (error) {
@@ -259,6 +283,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Text-to-speech endpoint
   app.post("/api/tts", requireAuth, async (req, res, next) => {
     try {
+      if (!req.user) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+      
       const { text, voiceType, speakingRate } = req.body;
       
       if (!text) {
@@ -281,6 +309,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Analytics endpoints
   app.get("/api/analytics", requireAuth, async (req, res, next) => {
     try {
+      if (!req.user) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+      
       const moods = await storage.getMoodsByUserId(req.user.id);
       const posts = await storage.getPostsByUserId(req.user.id);
       
