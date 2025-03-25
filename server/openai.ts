@@ -37,7 +37,7 @@ export async function analyzeEmotion(text: string): Promise<{
   }
 }
 
-export async function generateSupportiveResponse(content: string, mood?: string): Promise<string> {
+export async function generateSupportiveResponse(content: string, mood?: string | null): Promise<string> {
   try {
     // First, analyze the emotion in the content
     let emotionAnalysis: { emotion: string; intensity: number; sentiment: 'positive' | 'negative' | 'neutral' } | null = null;
@@ -252,7 +252,7 @@ export async function getChatbotResponse(
     const response = await openai.chat.completions.create({
       model: "gpt-4o",
       messages: [
-        { role: "system", content: systemPrompt },
+        { role: "system" as const, content: systemPrompt },
         ...formattedMessages
       ],
       max_tokens: 200,
