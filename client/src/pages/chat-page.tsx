@@ -51,7 +51,9 @@ export default function ChatPage() {
     // Define types for Speech Recognition API
     type SpeechRecognitionEvent = {
       results: {
+        readonly length: number;
         [index: number]: {
+          readonly length: number;
           [index: number]: {
             transcript: string;
           };
@@ -91,12 +93,22 @@ export default function ChatPage() {
         
         recognitionRef.current.onresult = (event: SpeechRecognitionEvent) => {
           try {
-            const transcript = Array.from(event.results)
-              .map(result => result[0])
-              .map(result => result.transcript as string)
-              .join('');
+            let finalTranscript = '';
             
-            setMessage(transcript);
+            // Access the SpeechRecognitionResult objects directly without converting to array
+            if (event.results) {
+              for (let i = 0; i < event.results.length; i++) {
+                // Get the first alternative for each result (most confident one)
+                if (event.results[i] && event.results[i][0]) {
+                  const transcript = event.results[i][0].transcript;
+                  if (transcript) {
+                    finalTranscript += transcript;
+                  }
+                }
+              }
+            }
+            
+            setMessage(finalTranscript);
           } catch (error) {
             console.error('Error processing speech recognition results', error);
           }

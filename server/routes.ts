@@ -40,6 +40,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Create new mood entry
   app.post("/api/moods", requireAuth, async (req, res, next) => {
     try {
+      if (!req.user) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+      
       const validatedData = insertMoodSchema.parse({
         ...req.body,
         userId: req.user.id
