@@ -43,7 +43,7 @@ export interface IStorage {
   getChatMessagesByUserId(userId: number): Promise<ChatMessage[]>;
 
   // Session store
-  sessionStore: session.SessionStore;
+  sessionStore: any;
 }
 
 export class MemStorage implements IStorage {
@@ -63,7 +63,7 @@ export class MemStorage implements IStorage {
   private aiResponseIdCounter: number;
   private chatMessageIdCounter: number;
   
-  sessionStore: session.SessionStore;
+  sessionStore: any;
 
   constructor() {
     this.users = new Map();
@@ -110,7 +110,13 @@ export class MemStorage implements IStorage {
   async createMood(insertMood: InsertMood): Promise<Mood> {
     const id = this.moodIdCounter++;
     const now = new Date();
-    const mood: Mood = { ...insertMood, id, createdAt: now };
+    const mood: Mood = { 
+      id,
+      userId: insertMood.userId, 
+      mood: insertMood.mood,
+      note: insertMood.note ?? null, 
+      createdAt: now 
+    };
     this.moods.set(id, mood);
     return mood;
   }
@@ -125,7 +131,13 @@ export class MemStorage implements IStorage {
   async createPost(insertPost: InsertPost): Promise<Post> {
     const id = this.postIdCounter++;
     const now = new Date();
-    const post: Post = { ...insertPost, id, createdAt: now };
+    const post: Post = { 
+      id,
+      userId: insertPost.userId,
+      content: insertPost.content,
+      mood: insertPost.mood ?? null,
+      createdAt: now 
+    };
     this.posts.set(id, post);
     return post;
   }
