@@ -48,43 +48,86 @@ export default function ChatPage() {
 
   // Initialize speech recognition
   useEffect(() => {
+    // Define types for Speech Recognition API
+    type SpeechRecognitionEvent = {
+      results: {
+        [index: number]: {
+          [index: number]: {
+            transcript: string;
+          };
+        };
+      };
+    };
+    
+    type SpeechRecognitionErrorEvent = {
+      error: string;
+    };
+    
+    type SpeechRecognitionConstructor = new () => {
+      continuous: boolean;
+      interimResults: boolean;
+      lang: string;
+      onresult: (event: SpeechRecognitionEvent) => void;
+      onerror: (event: SpeechRecognitionErrorEvent) => void;
+      onend: () => void;
+      start: () => void;
+      stop: () => void;
+    };
+    
     // Check if browser supports speech recognition
-    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-      const SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
-      recognitionRef.current = new SpeechRecognition();
-      
-      recognitionRef.current.continuous = true;
-      recognitionRef.current.interimResults = true;
-      recognitionRef.current.lang = 'en-US';
-      
-      recognitionRef.current.onresult = (event: any) => {
-        const transcript = Array.from(event.results)
-          .map((result: any) => result[0])
-          .map((result) => result.transcript)
-          .join('');
+    if (
+      typeof window !== 'undefined' && 
+      ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)
+    ) {
+      // Create recognition instance
+      try {
+        // @ts-ignore - WebkitSpeechRecognition is not in the types
+        const SpeechRecognition = (window.webkitSpeechRecognition || window.SpeechRecognition) as SpeechRecognitionConstructor;
+        recognitionRef.current = new SpeechRecognition();
         
-        setMessage(transcript);
-      };
-      
-      recognitionRef.current.onerror = (event: any) => {
-        console.error('Speech recognition error', event.error);
-        setIsRecording(false);
+        recognitionRef.current.continuous = true;
+        recognitionRef.current.interimResults = true;
+        recognitionRef.current.lang = 'en-US';
         
-        toast({
-          title: "Microphone Error",
-          description: "Could not access your microphone. Please check permissions.",
-          variant: "destructive",
-        });
-      };
-      
-      recognitionRef.current.onend = () => {
-        setIsRecording(false);
-      };
+        recognitionRef.current.onresult = (event) => {
+          try {
+            const transcript = Array.from(event.results)
+              .map(result => result[0])
+              .map(result => result.transcript)
+              .join('');
+            
+            setMessage(transcript);
+          } catch (error) {
+            console.error('Error processing speech recognition results', error);
+          }
+        };
+        
+        recognitionRef.current.onerror = (event) => {
+          console.error('Speech recognition error', event.error);
+          setIsRecording(false);
+          
+          toast({
+            title: "Microphone Error",
+            description: "Could not access your microphone. Please check permissions.",
+            variant: "destructive",
+          });
+        };
+        
+        recognitionRef.current.onend = () => {
+          setIsRecording(false);
+        };
+      } catch (error) {
+        console.error('Error initializing speech recognition', error);
+      }
     }
     
     return () => {
       if (recognitionRef.current) {
-        recognitionRef.current.stop();
+        try {
+          recognitionRef.current.stop();
+        } catch (error) {
+          console.error('Error stopping speech recognition', error);
+        }
       }
     };
   }, [toast]);
