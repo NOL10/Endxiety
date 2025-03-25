@@ -85,14 +85,16 @@ export default function AuthPage() {
       <Card className="w-full max-w-md">
         <CardContent className="pt-6">
           <div className="flex justify-center mb-6">
-            <div className="w-20 h-20 rounded-full bg-primary-light flex items-center justify-center text-primary">
-              <i className="fas fa-heart text-3xl"></i>
+            <div className="w-24 h-24 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 flex items-center justify-center text-white shadow-lg">
+              <i className="fas fa-brain text-4xl"></i>
             </div>
           </div>
           
           <div className="text-center mb-8">
-            <h2 className="font-display font-bold text-2xl mb-2">Welcome to EmoCare</h2>
-            <p className="text-neutral-600">Your anonymous emotional support space</p>
+            <h2 className="font-display font-bold text-3xl mb-2">
+              Welcome to <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-indigo-600">Endxiety</span>
+            </h2>
+            <p className="text-neutral-600">Your anonymous anxiety management companion</p>
           </div>
           
           <Tabs defaultValue="login" value={activeTab} onValueChange={setActiveTab}>

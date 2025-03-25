@@ -23,7 +23,7 @@ export default function HomePage() {
           <div className="flex justify-between h-16">
             <div className="flex">
               <div className="flex-shrink-0 flex items-center">
-                <span className="text-primary font-display font-bold text-xl">EmoCare</span>
+                <span className="text-primary font-display font-bold text-2xl">Endxiety</span>
               </div>
             </div>
             {user ? (
@@ -47,8 +47,10 @@ export default function HomePage() {
       <section className="pt-16">
         <div className="container mx-auto px-4 py-12 md:py-24">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="font-display font-bold text-4xl md:text-5xl text-neutral-800 mb-6">Your Emotional Support Companion</h1>
-            <p className="text-neutral-600 text-lg mb-8">A safe space to share, understand, and improve your emotional wellbeing - completely anonymous and supportive.</p>
+            <h1 className="font-display font-bold text-4xl md:text-6xl text-neutral-800 mb-6">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-indigo-600">End Anxiety.</span> Begin Peace.
+            </h1>
+            <p className="text-neutral-600 text-lg md:text-xl mb-8">Your personal AI-powered sanctuary for managing anxiety, building resilience, and finding community support - completely anonymous and judgment-free.</p>
             
             <div className="flex flex-col sm:flex-row justify-center gap-4 mb-16">
               <Button 
@@ -68,28 +70,28 @@ export default function HomePage() {
             </div>
             
             <div className="grid md:grid-cols-3 gap-8">
-              <div className="bg-white p-6 rounded-xl shadow-card">
-                <div className="w-16 h-16 bg-primary-light rounded-full flex items-center justify-center mx-auto mb-4">
-                  <i className="fas fa-comment-dots text-primary text-2xl"></i>
+              <div className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 border-t-4 border-purple-500">
+                <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md">
+                  <i className="fas fa-comment-alt text-white text-2xl"></i>
                 </div>
-                <h3 className="font-display font-semibold text-xl mb-3">Anonymous Sharing</h3>
-                <p className="text-neutral-600">Express yourself freely with complete anonymity and no judgment.</p>
+                <h3 className="font-display font-semibold text-xl mb-3 text-center">Safe Space</h3>
+                <p className="text-neutral-600 text-center">Share your anxiety triggers and experiences with complete anonymity in a supportive environment.</p>
               </div>
               
-              <div className="bg-white p-6 rounded-xl shadow-card">
-                <div className="w-16 h-16 bg-secondary-light rounded-full flex items-center justify-center mx-auto mb-4">
-                  <i className="fas fa-brain text-secondary text-2xl"></i>
+              <div className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 border-t-4 border-indigo-500">
+                <div className="w-16 h-16 bg-gradient-to-r from-indigo-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md">
+                  <i className="fas fa-robot text-white text-2xl"></i>
                 </div>
-                <h3 className="font-display font-semibold text-xl mb-3">AI Companion</h3>
-                <p className="text-neutral-600">Talk to our empathetic AI that understands your emotions and provides support.</p>
+                <h3 className="font-display font-semibold text-xl mb-3 text-center">AI Therapy Companion</h3>
+                <p className="text-neutral-600 text-center">Talk to our empathetic AI with voice support that helps identify anxiety patterns and provides real-time coping strategies.</p>
               </div>
               
-              <div className="bg-white p-6 rounded-xl shadow-card">
-                <div className="w-16 h-16 bg-accent-light rounded-full flex items-center justify-center mx-auto mb-4">
-                  <i className="fas fa-chart-line text-accent text-2xl"></i>
+              <div className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 border-t-4 border-blue-500">
+                <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md">
+                  <i className="fas fa-chart-bar text-white text-2xl"></i>
                 </div>
-                <h3 className="font-display font-semibold text-xl mb-3">Mood Insights</h3>
-                <p className="text-neutral-600">Track your emotional patterns and discover helpful insights to improve wellbeing.</p>
+                <h3 className="font-display font-semibold text-xl mb-3 text-center">Anxiety Insights</h3>
+                <p className="text-neutral-600 text-center">Visualize your anxiety patterns and receive personalized strategies to build resilience and mental strength.</p>
               </div>
             </div>
           </div>

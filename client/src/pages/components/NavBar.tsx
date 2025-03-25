@@ -26,10 +26,10 @@ export default function NavBar({ active }: NavBarProps) {
 
   const navLinks = [
     { name: "Home", path: "/", key: "home" },
-    { name: "Mood Tracker", path: "/mood", key: "mood" },
-    { name: "Community", path: "/community", key: "community" },
-    { name: "Personal Chat", path: "/chat", key: "chat" },
-    { name: "Analytics", path: "/analytics", key: "analytics" },
+    { name: "Anxiety Tracker", path: "/mood", key: "mood" },
+    { name: "Support Community", path: "/community", key: "community" },
+    { name: "AI Therapy", path: "/chat", key: "chat" },
+    { name: "Insights", path: "/analytics", key: "analytics" },
   ];
 
   const toggleMobileMenu = () => {
@@ -42,7 +42,10 @@ export default function NavBar({ active }: NavBarProps) {
         <div className="flex justify-between h-16">
           <div className="flex">
             <div className="flex-shrink-0 flex items-center">
-              <span className="text-primary font-display font-bold text-xl">EmoCare</span>
+              <span className="text-primary font-display font-bold text-2xl">
+                Endxiety
+                <span className="text-xs ml-1 bg-purple-100 text-purple-800 px-1.5 py-0.5 rounded-full">Beta</span>
+              </span>
             </div>
           </div>
           <div className="hidden md:flex items-center space-x-4">
